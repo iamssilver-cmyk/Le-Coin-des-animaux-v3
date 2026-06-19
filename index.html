@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Coin des Animaux - FLE A1</title>
     <style>
-        :root {
-            --seashell: #FFF4EB; --wheat: #F6E0B6; --french-blue: #3E4B8E;
-            --midnight-violet: #3D1534; --success: #2e7d32; --error: #c62828;
-        }
+        :root { --seashell: #FFF4EB; --wheat: #F6E0B6; --french-blue: #3E4B8E; --midnight-violet: #3D1534; --success: #2e7d32; --error: #c62828; }
         body { font-family: sans-serif; background-color: var(--seashell); color: var(--midnight-violet); margin: 0; padding: 40px 20px; }
         .container { max-width: 850px; margin: 0 auto; }
         header { text-align: center; padding: 40px; background: linear-gradient(135deg, var(--midnight-violet), var(--french-blue)); color: var(--seashell); border-radius: 24px; margin-bottom: 35px; }
@@ -22,41 +19,47 @@
 <body>
 
 <div class="container">
-    <header>
-        <h1>Le Coin des Animaux 🐾</h1>
-    </header>
+    <header><h1>Le Coin des Animaux 🐾</h1></header>
 
     <div class="page active" id="page-0">
-        <h2>Identification de l'étudiant</h2>
-        <div style="margin-bottom: 20px;">
-            <label>Nom :</label>
-            <input type="text" id="nom-etudiant" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-        </div>
-        <button class="btn-primary" onclick="pageSuivante()">Commencer l'aventure</button>
+        <h2>Identification</h2>
+        <input type="text" id="nom" placeholder="Votre nom" style="width:100%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+        <button class="btn-primary" onclick="suivant()">Commencer</button>
     </div>
 
     <div class="page" id="page-1">
-        <h2>Compétences Linguistiques</h2>
-        <button class="btn-primary" onclick="allerAPage(2)">Compréhension Orale</button>
+        <h2>Compétences</h2>
+        <button class="btn-primary" onclick="aller(2)">Compréhension Orale</button>
+        <button class="btn-primary" onclick="aller(3)">Compréhension Écrite</button>
     </div>
 
     <div class="page" id="page-2">
         <h2>Compréhension Orale</h2>
-        <p>Qui est le garçon ?</p>
-        <button class="quiz-option" onclick="alert('Bravo !')">Thomas</button>
-        <button class="quiz-option" onclick="alert('Mauvaise réponse !')">Paul</button>
+        <p>Qui est Thomas ?</p>
+        <button class="quiz-option" onclick="valider(this, true)">Un garçon</button>
+        <button class="quiz-option" onclick="valider(this, false)">Une fille</button>
+    </div>
+
+    <div class="page" id="page-3">
+        <h2>Compréhension Écrite</h2>
+        <p>Le chien s'appelle Max, Vrai ou Faux ?</p>
+        <button class="quiz-option" onclick="valider(this, true)">Vrai</button>
+        <button class="quiz-option" onclick="valider(this, false)">Faux</button>
     </div>
 </div>
 
 <script>
-    let pageActuelle = 0;
-    function allerAPage(index) {
+    let p = 0;
+    function aller(i) {
         document.querySelector('.page.active').classList.remove('active');
-        document.getElementById('page-' + index).classList.add('active');
-        pageActuelle = index;
+        document.getElementById('page-' + i).classList.add('active');
+        p = i;
     }
-    function pageSuivante() {
-        allerAPage(pageActuelle + 1);
+    function suivant() { aller(p + 1); }
+    function valider(btn, estCorrect) {
+        btn.style.backgroundColor = estCorrect ? 'var(--success)' : 'var(--error)';
+        btn.style.color = 'white';
+        alert(estCorrect ? 'Bravo !' : 'Réessayez !');
     }
 </script>
 
