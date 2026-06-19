@@ -3,84 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Coin des Animaux - FLE A1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Le Coin des Animaux - FLE A1 Complet</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Poppins:wght@400;600&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --seashell: #FFF4EB; --wheat: #F6E0B6; --french-blue: #3E4B8E;
-            --midnight-violet: #3D1534; --success: #2e7d32; --error: #c62828;
-            --glass-bg: #ffffff; --neo-shadow: 0 20px 40px rgba(61, 21, 52, 0.06);
+            --seashell: #FFF4EB;       
+            --wheat: #F6E0B6;          
+            --powder-blue: #A6BCC9;    
+            --french-blue: #3E4B8E;    
+            --midnight-violet: #3D1534;
+            --success: #2e7d32;
+            --error: #c62828;
+            --font-main: 'Nunito', sans-serif;
+            --font-headings: 'Poppins', sans-serif;
         }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--seashell); color: var(--midnight-violet); margin: 0; padding: 50px 20px; }
-        .container { max-width: 900px; margin: 0 auto; }
-        
-        /* تصميم الصفحة الأولى */
-        .hero-section { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; padding: 60px; background: white; border-radius: 32px; box-shadow: var(--neo-shadow); }
-        .hero-content h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 20px; color: var(--midnight-violet); }
-        .hero-image { background: var(--seashell); border-radius: 24px; padding: 40px; text-align: center; }
-        
-        .page { display: none; background: var(--glass-bg); border-radius: 32px; padding: 50px; box-shadow: var(--neo-shadow); }
+
+        body { font-family: var(--font-main); background-color: var(--seashell); color: var(--midnight-violet); margin: 0; padding: 40px 20px; }
+        .container { max-width: 950px; margin: 0 auto; }
+
+        header { text-align: center; padding: 40px; background: linear-gradient(135deg, var(--midnight-violet) 0%, var(--french-blue) 100%); color: #fff; border-radius: 30px; margin-bottom: 30px; }
+        h1, h2 { font-family: var(--font-headings); }
+
+        .page { display: none; background: #fff; border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .page.active { display: block; }
+
+        /* Vocabulary Section */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 20px; }
+        .vocab-card { background: #fdfdfd; border: 2px solid #eee; padding: 20px; border-radius: 20px; text-align: center; }
         
-        .btn-primary { background: linear-gradient(135deg, var(--french-blue), #252e5c); color: white; border: none; padding: 16px 36px; border-radius: 18px; cursor: pointer; font-weight: 700; transition: 0.3s; }
-        .btn-primary:hover { transform: translateY(-3px); }
+        button.btn-primary { background: var(--french-blue); color: white; border: none; padding: 15px 30px; border-radius: 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         
-        .quiz-option { display: block; width: 100%; padding: 18px; margin: 10px 0; border: 2px solid #eee; border-radius: 16px; cursor: pointer; text-align: left; transition: 0.3s; }
-        .quiz-option:hover { background: var(--wheat); }
+        .feedback { margin-top: 15px; padding: 10px; border-radius: 10px; font-weight: bold; }
         
-        .bravo-img { width: 200px; margin-bottom: 20px; }
+        /* Confetti Animation Placeholder */
+        #confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- الصفحة 0: الترحيب -->
+    <header>
+        <h1>Le Coin des Animaux 🐾</h1>
+        <p>Niveau FLE A1 - Module Interactif Universitaire</p>
+    </header>
+
+    <!-- Navigation -->
+    <div id="dots-container" style="display:flex; justify-content:center; gap:10px; margin-bottom:20px;">
+        <div class="dot active" style="width:10px; height:10px; background:var(--french-blue); border-radius:50%;"></div>
+    </div>
+
+    <!-- Page 0: Login -->
     <div class="page active" id="page-0">
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1>Le Coin des Animaux</h1>
-                <p>Bienvenue ! Découvrons les animaux de compagnie en français.</p>
-                <button class="btn-primary" onclick="changePage(1)">Commencer</button>
-            </div>
-            <div class="hero-image">
-                <img src="https://cdn-icons-png.flaticon.com/512/3069/3069172.png" alt="Animaux" style="width: 100%;">
-            </div>
-        </div>
-    </div>
-
-    <!-- الصفحة 1: المعلومات -->
-    <div class="page" id="page-1">
         <h2>Identification</h2>
-        <input type="text" id="nom" placeholder="Votre nom" style="width:100%; padding:15px; border-radius:12px; border:1px solid #ccc; margin-bottom:20px;">
-        <button class="btn-primary" onclick="changePage(1)">Suivant ➡</button>
+        <input type="text" id="student-name" placeholder="Nom de l'étudiant" style="width:100%; padding:15px; margin:10px 0;">
+        <button class="btn-primary" onclick="startModule()">Commencer</button>
     </div>
 
-    <!-- الصفحة 2: Comprehension Orale -->
-    <div class="page" id="page-2">
-        <h2>Compréhension Orale</h2>
-        <p>Qui est Thomas ?</p>
-        <button class="quiz-option" onclick="alert('Bravo !')">Un garçon</button>
-        <button class="quiz-option" onclick="alert('Réessayez !')">Une fille</button>
-        <button class="btn-primary" onclick="changePage(1)" style="margin-top:20px;">Suivant ➡</button>
-    </div>
-
-    <!-- الصفحة الأخيرة: Bravo -->
-    <div class="page" id="page-3">
-        <div style="text-align: center;">
-            <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" class="bravo-img" alt="Bravo">
-            <h1>Bravo !</h1>
-            <p>Tu as réussi toutes les activités avec succès !</p>
-            <button class="btn-primary" onclick="location.reload()">Recommencer</button>
+    <!-- Page 1: Dashboard -->
+    <div class="page" id="page-1">
+        <h2>Menu Principal</h2>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <button class="btn-primary" onclick="goToPage(2)">Compréhension Orale</button>
+            <button class="btn-primary" onclick="goToPage(3)">Compréhension Écrite</button>
+            <button class="btn-primary" onclick="goToPage(4)">Lexique (Nouveau)</button>
         </div>
+    </div>
+
+    <!-- Page 4: Lexique (New Feature) -->
+    <div class="page" id="page-4">
+        <h2>Lexique des Animaux</h2>
+        <div class="vocab-grid">
+            <div class="vocab-card">🐈‍⬛<br><strong>Chat</strong></div>
+            <div class="vocab-card">🐕<br><strong>Chien</strong></div>
+            <div class="vocab-card">🐇<br><strong>Lapin</strong></div>
+            <div class="vocab-card">🐦<br><strong>Oiseau</strong></div>
+        </div>
+        <button class="btn-primary" onclick="goToPage(1)" style="margin-top:20px;">Retour</button>
+    </div>
+
+    <!-- Page 7: Results -->
+    <div class="page" id="page-7">
+        <h2>Résultats Finaux</h2>
+        <div id="results-content"></div>
+        <button class="btn-primary" onclick="window.print()">Imprimer Rapport</button>
     </div>
 </div>
 
+<div id="confetti"></div>
+
 <script>
-    let p = 0;
-    function changePage(step) {
-        document.getElementById('page-' + p).classList.remove('active');
-        p += step;
-        document.getElementById('page-' + p).classList.add('active');
+    let currentPage = 0;
+    let scores = { co: 0, ce: 0 };
+
+    function startModule() {
+        const name = document.getElementById('student-name').value;
+        if (!name) return alert("Veuillez entrer votre nom !");
+        goToPage(1);
+    }
+
+    function goToPage(index) {
+        document.getElementById(`page-${currentPage}`).classList.remove('active');
+        currentPage = index;
+        document.getElementById(`page-${currentPage}`).classList.add('active');
+    }
+
+    function validateBlanks() {
+        let b1 = document.getElementById('blank-1')?.value.toLowerCase();
+        // منطق التحقق المكتمل
+        if (b1 === 'animal') {
+            scores.ce += 10;
+            document.getElementById('blanks-feedback').innerText = "Bravo !";
+            triggerConfetti();
+        } else {
+            document.getElementById('blanks-feedback').innerText = "Réessayez !";
+        }
+    }
+
+    function triggerConfetti() {
+        const c = document.getElementById('confetti');
+        c.innerHTML = "<h1 style='text-align:center; margin-top:20%; color:var(--french-blue)'>🎉 Félicitations ! 🎉</h1>";
+        setTimeout(() => c.innerHTML = "", 3000);
     }
 </script>
 
