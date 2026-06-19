@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Coin des Animaux - FLE A1</title>
+    <style>
+        :root {
+            --seashell: #FFF4EB;       
+            --wheat: #F6E0B6;          
+            --powder-blue: #A6BCC9;    
+            --french-blue: #3E4B8E;    
+            --midnight-violet: #3D1534;
+            --success: #2e7d32;
+            --error: #c62828;
+            --glass-bg: #ffffff;
+            --neo-shadow: 0 20px 40px rgba(61, 21, 52, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+            --hover-lift: 0 30px 60px rgba(61, 21, 52, 0.12);
+        }
+
+        *, *::before, *::after {
+            box-shadow: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--seashell);
+            color: var(--midnight-violet);
+            margin: 0;
+            padding: 50px 20px;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, var(--midnight-violet) 0%, var(--french-blue) 100%);
+            color: var(--seashell);
+            border-radius: 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 25px 50px rgba(61, 21, 52, 0.15);
+        }
+
+        header h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
+        header p { margin: 14px 0 0 0; opacity: 0.85; font-size: 1.2rem; font-weight: 300; letter-spacing: 0.5px; }
+
+        .navigation-dots {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--powder-blue);
+            border-radius: 100px;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.4;
+        }
+
+        .dot.active {
+            background-color: var(--french-blue);
+            width: 40px;
+            opacity: 1;
+        }
+
+        .page {
+            display: none;
+            background: var(--glass-bg);
+            border-radius: 32px;
+            padding: 50px;
+            box-shadow: var(--neo-shadow);
+            animation: modernSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 500px;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes modernSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-title {
+            color: var(--midnight-violet);
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 700; font-size: 1rem; color: var(--midnight-violet); }
+        
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            color: var(--midnight-violet);
+            background: rgba(166, 188, 201, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        input:focus, select:focus { 
+            border-color: var(--french-blue); 
+            background: #fff;
+            outline: none; 
+            box-shadow: 0 0 0 5px rgba(62, 75, 142, 0.15);
+        }
+
+        .grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 35px;
+        }
+
+        .skill-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+            border: 1px solid rgba(166, 188, 201, 0.2);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--hover-lift);
+            border-color: var(--french-blue);
+            background: linear-gradient(180deg, #ffffff 0%, var(--seashell) 100%);
+        }
+
+        .skill-icon { font-size: 3.5rem; display: block; margin-bottom: 20px; }
+        .skill-card h3 { margin: 0 0 12px 0; color: var(--midnight-violet); font-size: 1.4rem; font-weight: 800; }
+        .skill-card p { margin: 0; font-size: 0.95rem; color: #6e5d69; line-height: 1.5; }
+
+        .inline-blank, .inline-select {
+            width: 140px !important;
+            display: inline-block !important;
+            padding: 8px 14px !important;
+            margin: 0 8px;
+            border: 2px solid rgba(166, 188, 201, 0.4) !important;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        .circle-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin-top: 40px;
+        }
+
+        .animal-circle-card {
+            background: #ffffff;
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--neo-shadow);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(166, 188, 201, 0.2);
+        }
+
+        .animal-circle-card:hover {
+            transform: scale(1.1) translateY(-6px);
+            box-shadow: var(--hover-lift);
+            border-color: var(--french-blue);
+        }
+
+        .animal-circle-emoji { font-size: 3.2rem; margin-bottom: 4px; }
+        .animal-circle-name { font-size: 1rem; font-weight: 800; color: var(--midnight-violet); }
+
+        .quiz-container {
+            margin-top: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(166, 188, 201, 0.25);
+        }
+
+        .quiz-question { font-size: 1.2rem; font-weight: 700; color: var(--midnight-violet); margin-bottom: 18px; }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: rgba(166, 188, 201, 0.1);
+            color: var(--midnight-violet);
+            padding: 18px 24px;
+            margin: 10px 0;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .quiz-option:hover {
+            background: #fff;
+            border-color: var(--french-blue);
+            transform: translateX(6px);
+            box-shadow: 0 10px 20px rgba(62, 75, 142, 0.05);
+        }
+
+        button.btn-primary {
+            background: linear-gradient(135deg, var(--french-blue) 0%, #252e5c 100%);
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 25px rgba(62, 75, 142, 0.25);
+        }
+
+        button.btn-primary:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(62, 75, 142, 0.35);
+        }
+        button.btn-primary:disabled { background: var(--powder-blue); cursor: not-allowed; opacity: 0.5; transform: none; box-shadow: none; }
+
+        .reading-box {
+            background: rgba(255, 244, 235, 0.6);
+            border-left: 6px solid var(--french-blue);
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 35px;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #3d2f3a;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 18px 24px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+            border: 1px solid rgba(166, 188, 201, 0.2);
+        }
+
+        .vf-container {
+            background: #ffffff;
+            border: 1px solid rgba(166, 188, 201, 0.2);
+            border-radius: 20px;
+            padding: 24px 30px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--neo-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .vf-text { font-size: 1.15rem; font-weight: 700; }
+        .vf-buttons { display: flex; gap: 14px; }
+        
+        .btn-vrai { background-color: #2e7d32; color: white; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; }
+        .btn-faux { background-color: #d32f2f; color: white; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; }
+        .btn-vrai:hover, .btn-faux:hover { transform: translateY(-2px); opacity: 0.95; }
+        .btn-vrai:disabled, .btn-faux:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+        .controls { display: flex; justify-content: flex-end; margin-top: 40px; }
+        .score-board { text-align: center; margin-top: 30px; font-size: 1.35rem; font-weight: 800; color: var(--midnight-violet); }
+        .score-value { background: var(--midnight-violet); color: var(--seashell); padding: 8px 24px; border-radius: 100px; font-weight: 900; }
+        .feedback-msg { font-weight: 700; margin-top: 10px; min-height: 24px; font-size: 1.05rem; }
+        
+        .row-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Le Coin des Animaux 🐾</h1>
+        <p>Niveau FLE A1 - Module Interactif Universitaire</p>
+    </header>
+
+    <div class="navigation-dots" id="dots-container">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="score-board" id="score-section" style="display: none;">
+        Score global : <span class="score-value" id="global-score">0</span>
+    </div>
+
+    <!-- Page 0: Identification -->
+    <div class="page active" id="page-0">
+        <h2 class="page-title">Identification de l'étudiant</h2>
+        <p style="color: #6e5d69; font-size: 1.1rem; margin-bottom: 35px;">Veuillez entrer vos informations pour commencer le module :</p>
+        <div>
+            <div class="form-group">
+                <label for="student-name">Nom complet de l'étudiant(e) :</label>
+                <input type="text" id="student-name" placeholder="Ex: Sarah Ahmed">
+            </div>
+            <div class="form-group">
+                <label for="student-id">Numéro universitaire :</label>
+                <input type="number" id="student-id" placeholder="Ex: 442001234">
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="btn-primary" onclick="changePage(1)">Commencer l'aventure ➡</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 1: Les Quatre Compétences -->
+    <div class="page" id="page-1">
+        <h2 class="page-title">Les Compétences Linguistiques</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem; margin-bottom: 25px;">Cliquez sur une compétence pour accéder à la section correspondante :</p>
+        <div class="grid-2x2">
+            <div class="skill-card" onclick="goToPage(2)">
+                <span class="skill-icon">🎧</span>
+                <h3>Compréhension Orale</h3>
+                <p>Écouter et répondre aux questions</p>
+            </div>
+            <div class="skill-card" onclick="goToPage(3)">
+                <span class="skill-icon">📖</span>
+                <h3>Compréhension Écrite</h3>
+                <p>Lire, remplir les blancs et associer</p>
+            </div>
+            <div class="skill-card" onclick="goToPage(4)">
+                <span class="skill-icon">🗣️</span>
+                <h3>Production Orale</h3>
+                <p>Pratiquer la prononciation et s'enregistrer</p>
+            </div>
+            <div class="skill-card" onclick="goToPage(5)">
+                <span class="skill-icon">✍️</span>
+                <h3>Production Écrite</h3>
+                <p>Remplir la fiche d'adoption</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Compréhension Orale -->
+    <div class="page" id="page-2">
+        <h2 class="page-title">Compréhension Orale</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem;">Écoutez attentivement l'audio, puis répondez aux 5 questions :</p>
+        
+        <div style="text-align: center; margin: 35px 0;">
+            <button class="btn-primary" id="audio-btn" onclick="playAudioWithLimit()">
+                🔊 Écouter l'histoire complète (<span id="audio-count">3</span> restants)
+            </button>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question"><strong>1. Quel est le prénom du garçon ?</strong></div>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co1', 'wrong')">A) Paul</button>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co1', 'correct')">B) Thomas</button>
+            <div class="feedback-msg" id="co1-feedback"></div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question"><strong>2. Combien d'animaux a-t-il à la maison ?</strong></div>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co2', 'wrong')">A) Deux</button>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co2', 'correct')">B) Trois</button>
+            <div class="feedback-msg" id="co2-feedback"></div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question"><strong>3. De quelle couleur est son petit chat ?</strong></div>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co3', 'correct')">A) Noir</button>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co3', 'wrong')">B) Gris</button>
+            <div class="feedback-msg" id="co3-feedback"></div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question"><strong>4. Comment s'appelle son lapin ?</strong></div>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co4', 'wrong')">A) Felix</button>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co4', 'correct')">B) Max</button>
+            <div class="feedback-msg" id="co4-feedback"></div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="quiz-question"><strong>5. De quelle couleur est son grand chien ?</strong></div>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co5', 'correct')">A) Blanc</button>
+            <button class="quiz-option" onclick="checkQCMAnswer(this, 'co5', 'wrong')">B) Marron</button>
+            <div class="feedback-msg" id="co5-feedback"></div>
+        </div>
+    </div>
+
+    <!-- Page 3: Compréhension Écrite -->
+    <div class="page" id="page-3">
+        <h2 class="page-title">Compréhension Écrite</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem;">Lisez le texte, puis complétez les activités interactives ci-dessous :</p>
+        
+        <div class="reading-box">
+            <strong>Texte : Le chien de Sophie</strong><br>
+            Sophie a un grand chien marron qui s'appelle Max. Max adore jouer dans le jardin avec une petite balle rouge. L'après-midi, il dort dans son panier dans la cuisine. Sophie aime beaucoup donner des biscuits à Max.
+        </div>
+
+        <h3 style="font-size:1.2rem; margin-top:30px; font-weight:800;">1. Complète le texte (Fill in the blanks) :</h3>
+        <p style="background: rgba(166,188,201,0.1); padding: 25px; border-radius: 20px; line-height: 2.4; font-size:1.05rem;">
+            Max est un grand <input type="text" id="blank-1" class="inline-blank" placeholder="animal..."> marron. 
+            Il aime jouer avec une balle <input type="text" id="blank-2" class="inline-blank" placeholder="couleur...">.
+            Il dort dans la <input type="text" id="blank-3" class="inline-blank" placeholder="pièce...">.
+        </p>
+        <button class="btn-primary" onclick="validateBlanks()" style="padding: 10px 24px; font-size: 0.95rem; border-radius:12px;">Vérifier les réponses</button>
+        <div class="feedback-msg" id="blanks-feedback"></div>
+
+        <h3 style="font-size:1.2rem; margin-top:40px; font-weight:800;">2. Drop-down Match :</h3>
+        <div>
+            <div class="matching-row">
+                <span>Max joue dans le...</span>
+                <select id="drop-1" class="inline-select">
+                    <option value="">Choisir...</option>
+                    <option value="jardin">jardin</option>
+                    <option value="salon">salon</option>
+                </select>
+            </div>
+            <div class="matching-row">
+                <span>Le jouet de Max est une...</span>
+                <select id="drop-2" class="inline-select">
+                    <option value="">Choisir...</option>
+                    <option value="balle">balle</option>
+                    <option value="corde">corde</option>
+                </select>
+            </div>
+            <div class="matching-row">
+                <span>Max dort dans son...</span>
+                <select id="drop-3" class="inline-select">
+                    <option value="">Choisir...</option>
+                    <option value="panier">panier</option>
+                    <option value="lit">lit</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-primary" onclick="validateDropdowns()" style="padding: 10px 24px; font-size: 0.95rem; margin-top: 15px; border-radius:12px;">Vérifier les associations</button>
+        <div class="feedback-msg" id="dropdowns-feedback"></div>
+    </div>
+
+    <!-- Page 4: Production Orale -->
+    <div class="page" id="page-4">
+        <h2 class="page-title">Production Orale</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem;">1. Cliquez sur chaque cercle pour écouter et répéter :</p>
+        <div class="circle-grid">
+            <div class="animal-circle-card" onclick="speakFrench('Le chat')">
+                <span class="animal-circle-emoji">🐈‍⬛</span>
+                <span class="animal-circle-name">Le chat</span>
+            </div>
+            <div class="animal-circle-card" onclick="speakFrench('Le chien')">
+                <span class="animal-circle-emoji">🐕</span>
+                <span class="animal-circle-name">Le chien</span>
+            </div>
+            <div class="animal-circle-card" onclick="speakFrench('L\'oiseau')">
+                <span class="animal-circle-emoji">🐦</span>
+                <span class="animal-circle-name">L'oiseau</span>
+            </div>
+            <div class="animal-circle-card" onclick="speakFrench('Le lapin')">
+                <span class="animal-circle-emoji">🐇</span>
+                <span class="animal-circle-name">Le lapin</span>
+            </div>
+        </div>
+
+        <p style="margin-top: 45px; color:#6e5d69; font-size: 1.05rem;">2. Présentez votre animal préféré à voix haute :</p>
+        <div style="text-align: center; background: #ffffff; padding: 45px 30px; border-radius: 24px; border: 2px dashed rgba(62, 75, 142, 0.3); box-shadow: var(--neo-shadow);">
+            <span style="font-size: 3.5rem; display:block; margin-bottom: 20px;">🎙️</span>
+            <button class="btn-primary" onclick="alert('Simulation d\'enregistrement demarree... Parlez maintenant !')">Commencer l'enregistrement</button>
+            <div style="margin-top: 20px; font-size: 0.95rem; color: #6e5d69; font-style: italic;">
+                Utilisez les expressions : <em>Il s'appelle... / Il a... ans / Il aime manger...</em>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 5: Production Écrite -->
+    <div class="page" id="page-5">
+        <h2 class="page-title">Production Écrite : Crée ton animal</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem;">Remplissez la fiche d'adoption pour créer et décrire votre animal virtuel :</p>
+        
+        <div style="background: #ffffff; padding: 40px; border-radius: 24px; border: 1px solid rgba(166, 188, 201, 0.2); box-shadow: var(--neo-shadow); margin-top: 30px;">
+            <div class="row-grid-2">
+                <div class="form-group">
+                    <label>Nom de l'animal :</label>
+                    <input type="text" placeholder="Ex: Bella">
+                </div>
+                <div class="form-group">
+                    <label>Âge :</label>
+                    <input type="text" placeholder="Ex: 2 ans">
+                </div>
+            </div>
+            <div class="row-grid-2">
+                <div class="form-group">
+                    <label>Animal :</label>
+                    <select>
+                        <option>Choisir...</option>
+                        <option>Un chat 🐈‍⬛</option>
+                        <option>Un chien 🐕</option>
+                        <option>Un oiseau 🐦</option>
+                        <option>Un lapin 🐇</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Couleur :</label>
+                    <input type="text" placeholder="Ex: blanc et noir">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>J'aime mon animal parce que... (Écris une phrase complète) :</label>
+                <input type="text" id="pe-phrase" placeholder="Ex: Il est très gentil et beau.">
+            </div>
+            <div style="text-align: center; margin-top: 35px;">
+                <button class="btn-primary" onclick="validateProductionEcrite()">Créer ma fiche</button>
+            </div>
+            <div class="feedback-msg" id="pe-feedback" style="text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- Page 6: Activité Spéciale -->
+    <div class="page" id="page-6">
+        <h2 class="page-title">Activité Spéciale : Vrai ou Faux ?</h2>
+        <p style="color: #6e5d69; font-size: 1.05rem; margin-bottom: 35px;">Lisez les affirmations et décidez si elles sont vraies ou fausses :</p>
+        
+        <div>
+            <div class="vf-container">
+                <span class="vf-text">1. Le lapin est un oiseau qui vole dans le ciel. 🐇✈️</span>
+                <div class="vf-buttons">
+                    <button class="btn-vrai" onclick="checkVF(this, 'vf1', 'faux')">Vrai</button>
+                    <button class="btn-faux" onclick="checkVF(this, 'vf1', 'vrai')">Faux</button>
+                </div>
+            </div>
+            <div class="feedback-msg" id="vf1-feedback" style="margin-bottom: 25px;"></div>
+
+            <div class="vf-container">
+                <span class="vf-text">2. Le chien est un animal domestique fidèle. 🐕❤️</span>
+                <div class="vf-buttons">
+                    <button class="btn-vrai" onclick="checkVF(this, 'vf2', 'vrai')">Vrai</button>
+                    <button class="btn-faux" onclick="checkVF(this, 'vf2', 'faux')">Faux</button>
+                </div>
+            </div>
+            <div class="feedback-msg" id="vf2-feedback" style="margin-bottom: 25px;"></div>
+
+            <div class="vf-container">
+                <span class="vf-text">3. Le chat aime manger des carottes fraîches. 🐈‍⬛🥕</span>
+                <div class="vf-buttons">
+                    <button class="btn-vrai" onclick="checkVF(this, 'vf3', 'faux')">Vrai</button>
+                    <button class="btn-faux" onclick="checkVF(this, 'vf3', 'vrai')">Faux</button>
+                </div>
+            </div>
+            <div class="feedback-msg" id="vf3-feedback" style="margin-bottom: 25px;"></div>
+        </div>
+    </div>
+
+    <!-- Controls section -->
+    <div class="controls" id="controls-section" style="display: none;">
+        <button id="nextBtn" onclick="changePage(1)" class="btn-primary">Suivant ➡</button>
+    </div>
+</div>
+
+<script>
+    let currentPage = 0;
+    const totalPages = 7;
+    let totalScore = 0;
+    let audioAttempts = 3;
+    let answeredQuestions = {};
+
+    function goToPage(index) {
+        if (index < 0 || index >= totalPages) return;
+        
+        document.getElementById(`page-${currentPage}`).classList.remove('active');
+        document.querySelectorAll('.dot')[currentPage].classList.remove('active');
+        
+        currentPage = index;
+        document.getElementById(`page-${currentPage}`).classList.add('active');
+        document.querySelectorAll('.dot')[currentPage].classList.add('active');
+        
+        if (currentPage === 0) {
+            document.getElementById('controls-section').style.display = 'none';
+            document.getElementById('score-section').style.display = 'none';
+        } else {
+            document.getElementById('controls-section').style.display = 'flex';
+            document.getElementById('score-section').style.display = 'block';
+        }
+
+        document.getElementById('nextBtn').style.visibility = currentPage === totalPages - 1 ? 'hidden' : 'visible';
+    }
+
+    function changePage(direction) {
+        if (direction === 1 && currentPage === 0) {
+            const name = document.getElementById('student-name').value.trim();
+            const id = document.getElementById('student-id').value.trim();
+            if (!name || !id) {
+                alert("Veuillez entrer votre nom et votre numero universitaire pour continuer.");
+                return;
+            }
+        }
+        goToPage(currentPage + direction);
+    }
+
+    function playAudioWithLimit() {
+        if (audioAttempts <= 0) return;
+        
+        audioAttempts--;
+        document.getElementById('audio-count').innerText = audioAttempts;
+        
+        speakFrench("Bonjour! Je m'appelle Thomas. J'ai trois animaux à la maison. J'ai un petit chat noir, un grand chien blanc, et un joli lapin gris qui s'appelle Max. J'aime beaucoup mes animaux.");
+        
+        if (audioAttempts === 0) {
+            const btn = document.getElementById('audio-btn');
+            btn.disabled = true;
+            btn.style.background = "var(--powder-blue)";
+            btn.innerText = "❌ Audio bloque (0 tentatives)";
+        }
+    }
+
+    function speakFrench(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'fr-FR'; 
+            utterance.rate = 0.82; 
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    function checkQCMAnswer(element, questionId, status) {
+        if (answeredQuestions[questionId]) return;
+        const feedbackElement = document.getElementById(`${questionId}-feedback`);
+        
+        if (status === 'correct') {
+            element.style.backgroundColor = "var(--wheat)";
+            element.style.borderColor = "var(--success)";
+            feedbackElement.innerHTML = "✅ Bravo! C'est correct.";
+            feedbackElement.style.color = "var(--success)";
+            updateScore(10);
+        } else {
+            element.style.borderColor = "var(--error)";
+            feedbackElement.innerHTML = "❌ Desole, mauvaise reponse !";
+            feedbackElement.style.color = "var(--error)";
+        }
+        answeredQuestions[questionId] = true;
+    }
+
+    function validateBlanks() {
+        if(answeredQuestions['blanks']) return;
+        const b1 = document.getElementById('blank-1').value.trim().toLowerCase();
+        const b2 = document.getElementById('blank-2').value.trim().toLowerCase();
+        const b3 = document.getElementById('blank-3').value.trim().toLowerCase();
+        const feedback = document.getElementById('blanks-feedback');
+
+        if(b1 === 'chien' && b2 === 'rouge' && b3 === 'cuisine') {
+            feedback.innerHTML = "✅ Excellent ! Tous les blancs sont corrects (+15 pts).";
+            feedback.style.color = "var(--success)";
+            updateScore(15);
+            answeredQuestions['blanks'] = true;
+        } else {
+            feedback.innerHTML = "❌ Certaines reponses sont incorrectes. Reessayez !";
+            feedback.style.color = "var(--error)";
+        }
+    }
+
+    function validateDropdowns() {
+        if(answeredQuestions['dropdowns']) return;
+        const d1 = document.getElementById('drop-1').value;
+        const d2 = document.getElementById('drop-2').value;
+        const d3 = document.getElementById('drop-3').value;
+        const feedback = document.getElementById('dropdowns-feedback');
+
+        if(d1 === 'jardin' && d2 === 'balle' && d3 === 'panier') {
+            feedback.innerHTML = "✅ Superbe ! Les associations sont parfaites (+15 pts).";
+            feedback.style.color = "var(--success)";
+            updateScore(15);
+            answeredQuestions['dropdowns'] = true;
+        } else {
+            feedback.innerHTML = "❌ Verifiez vos selections et reessayez !";
+            feedback.style.color = "var(--error)";
+        }
+    }
+
+    function validateProductionEcrite() {
+        if(answeredQuestions['pe']) return;
+        const input = document.getElementById('pe-phrase').value.trim();
+        const feedback = document.getElementById('pe-feedback');
+        if(input.length < 5) {
+            feedback.innerHTML = "❌ Veuillez ecrire une phrase complete pour valider la fiche.";
+            feedback.style.color = "var(--error)";
+        } else {
+            feedback.innerHTML = "🎉 Fiche d'adoption creee avec succes ! (+10 pts)";
+            feedback.style.color = "var(--success)";
+            updateScore(10);
+            answeredQuestions['pe'] = true;
+        }
+    }
+
+    function checkVF(button, id, result) {
+        if (answeredQuestions[id]) return;
+        const feedback = document.getElementById(`${id}-feedback`);
+        
+        if (result === 'vrai') {
+            feedback.innerHTML = "✅ Correct ! Bonne analyse.";
+            feedback.style.color = "var(--success)";
+            updateScore(10);
+        } else {
+            feedback.innerHTML = "❌ Incorrect ! Pensez à revoir le vocabulaire.";
+            feedback.style.color = "var(--error)";
+        }
+        answeredQuestions[id] = true;
+        
+        const container = button.parentElement;
+        const buttons = container.getElementsByTagName('button');
+        buttons[0].disabled = true;
+        buttons[1].disabled = true;
+    }
+
+    function updateScore(points) {
+        totalScore += points;
+        document.getElementById('global-score').innerText = totalScore;
+    }
+</script>
+
+</body>
+</html>
